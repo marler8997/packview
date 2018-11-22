@@ -1,0 +1,11 @@
+#!/bin/bash
+set -e
+repo="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
+
+set -x
+if [ ! -d $repo/bin ]; then
+    mkdir $repo/bin
+    DC=dmd meson $repo/bin
+fi
+ninja -C bin
+sudo setcap cap_sys_admin+ep bin/packview
